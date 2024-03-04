@@ -1,17 +1,21 @@
 from selenium import webdriver
+import time
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-# Provide the path to the ChromeDriver executable
-chrome_driver_path = '/home/himagi/Documents/project/ApSpaceParser/chromedriver'
 
-# Create a WebDriver instance using the ChromeDriver executable path
-driver = webdriver.Chrome(executable_path = chrome_driver_path)
+driver = webdriver.Edge()
 
-# Navigate to the Bing homepage
-driver.get("https://www.bing.com")
+wait = WebDriverWait(driver, 30)
 
-# Print the current URL after navigating
-print(driver.current_url)
+driver.get("https://apspace.apu.edu.my/student-timetable")
 
-# Close the browser
-driver.quit()
+#wait.until(EC.title_is("aaaa"))
+time.sleep(20)
 
+
+html = driver.execute_script("return document.documentElement.outerHTML")
+
+print(html)
