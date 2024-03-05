@@ -7,25 +7,31 @@ from selenium.webdriver.support import expected_conditions as EC
 
 #add headless browser
 
-driver = webdriver.Chrome()
+driver = webdriver.Edge()
 
 wait = WebDriverWait(driver, 30)
 
 driver.get("https://apspace.apu.edu.my/student-timetable")
 
 #wait.until(EC.title_is("aaaa"))
-time.sleep(7)
+
+#time.sleep(5)
 
 name_class = "ion-color ion-color-primary md button button-outline ion-activatable ion-focusable hydrated" 
 
 print(driver.page_source)
 
-button = driver.find_element(By.XPATH , ("//ion-button[@class='ion-color ion-color-primary md button button-outline ion-activatable ion-focusable hydrated']"));
+element = WebDriverWait(driver, 15).until(
+    EC.presence_of_element_located((By.XPATH, "//ion-button[@class='ion-color ion-color-primary md button button-outline ion-activatable ion-focusable hydrated']"))    
+)
 
-# clicking on the button
-button.click()
+element.click()
 
-time.sleep(10)
+#button = driver.find_element(By.XPATH , ("//ion-button[@class='ion-color ion-color-primary md button button-outline ion-activatable ion-focusable hydrated']"));
+
+#button.click()
+
+time.sleep(2)
 
 searchbar = driver.find_element(By.XPATH, "//input[@class='searchbar-input sc-ion-searchbar-md']")
 
