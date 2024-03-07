@@ -2,7 +2,7 @@ import 'package:apspaceparser/apspaceparser.dart';
 import 'package:test/test.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'classes.dart';
 
 void main() async{
 	var url = Uri.parse("https://s3-ap-southeast-1.amazonaws.com/open-ws/weektimetable");
@@ -10,9 +10,12 @@ void main() async{
 	if(response.statusCode == 200){
 		List<dynamic> jsonData = json.decode(response.body);
 
+    
+
 		for (var element in jsonData){
 			if  (element['INTAKE'] == "APU2F2309SE"){
 				print(element);
+        
 			}
 		}
 
@@ -23,3 +26,8 @@ void main() async{
 		print('Request failed with status: ${response.statusCode}.');
 	}
 }
+
+
+
+
+
