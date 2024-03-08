@@ -10,11 +10,17 @@ void main() async{
 	if(response.statusCode == 200){
 		List<dynamic> jsonData = json.decode(response.body);
 
-		Date a = getThisAndNextWeekDate(jsonData, "APU2F2309SE");
 
-		print(a.date);
-		print(a.month);
-		print(a.year);
+
+		print(getNumberOfWeeks(getIntakeData(jsonData, "APU2F2309SE")));
+		Date eleven = Date(m: 3, d:11, y:2024);
+		
+		List<dynamic> todaySchedule = getOneDaySchedule(getIntakeData(jsonData,"APU2F2309SE"), eleven);
+
+		Day a = Day(eleven, todaySchedule);
+
+		print(a.startTime);
+		print(a.endTime);
 
 		// if(jsonData != null){
 		// 	print(getThisWeekMondayDate(jsonData, "APU2F2309SE"));

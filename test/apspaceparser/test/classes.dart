@@ -2,14 +2,51 @@ class Day{
   List<int> startTime = [];
   List<int> endTime = [];
   Date? date;
+  List<dynamic> todaySchedule = [];
   
-  Day(Date d){
+  Day(Date d, List<dynamic> todaySchedule){
     date = d;
+    this.todaySchedule = todaySchedule;
+    getStartAndEndTime();
   }
+
+  void getStartAndEndTime(){
+    for(var i in todaySchedule){
+      Time s = Time(i['TIME_FROM']);
+      Time e = Time(i['TIME_TO']);
+      startTime.add(s.getTime());
+      endTime.add(e.getTime());
+    }
+  }
+
+
 
 
 }
 
+class Time{
+  int hour = 0;
+  int minute = 0;
+
+
+  Time(String t){
+    List<String> timeSplit = t.split(" ");
+    List<String> timeSplitSplit = timeSplit[0].split(":");
+    hour = int.parse(timeSplitSplit[0]);
+    minute = int.parse(timeSplitSplit[1]);
+    if (timeSplit[1] == "PM"){
+      hour += 12;
+      if (hour > 23){
+        hour -= 12;
+      }
+    }
+  }
+  int getTime(){
+    String result = "$hour$minute";
+    return int.parse(result);
+  }
+
+}
 
 class Date{
   int month = 0;
@@ -107,23 +144,24 @@ class Week{
   Day? wednesday;
   Day? thursday;
   Day? friday;
+
+  Date mon
+
+  
 }
 
-// Date getThisAndNextWeekDat(List<dynamic> data, String intake){
-//   DateTime today = DateTime.now();
-//   List<dynamic>? filteredData = [];
-
-//   Date date =  Date(m: today.month, d: today.day - 7, y: today.year );
+List<dynamic> getIntakeData(List<dynamic> data, String intake){
+  List<dynamic>? filteredData = [];
   
-//   for (var i in data){
-//     if (i['DAY'] == "MON" && date.compareDate(i['DATESTAMP_ISO']) && i['INTAKE'] == intake){
-//       filteredData.add(i);
-//     }
-//   }
+  for (var i in data){
+    if (i['INTAKE'] == intake){
+      filteredData.add(i);
+    }
+  }
 
-//   return filteredData;
+  return filteredData;
 
-// }
+}
 
 
 Date getThisWeekDate(List<dynamic> data){
@@ -137,12 +175,45 @@ Date getThisWeekDate(List<dynamic> data){
   return date;
 }
 
-int getNumberOfWeeks(List<dynamic> data, String intake){
+int getNumberOfWeeks(List<dynamic> data){
   Date thisMon = getThisWeekDate(data);
 
-  //continue
+  Date nextMon = getThisWeekDate(data);
+  nextMon.addDate(7);
 
+  Date twoNextMon = getThisWeekDate(data);
+  nextMon.addDate(14);
+
+  var lastIndex = data[data.length - 1];
+
+  String lastDate = lastIndex['DATESTAMP_ISO'];
+
+  if(twoNextMon.compareDate(lastDate)){
+    return 3;
+  }
+  else if (nextMon.compareDate(lastDate)){
+    return 2;
+  }
   
   return 1;
 
+}
+
+List<dynamic> getOneDaySchedule(List<dynamic> schedule, Date today){
+  String todayStr = (today.year).toString() + "-" + (today.month).toString() + "-" + (today.date).toString();
+  List<dynamic> todaySchedule = [];
+
+  
+
+  for (var i in schedule){
+    String a = i['DATESTAMP_ISO'];
+    List<String> asplit = a.split("-");
+    Date formattedDate = Date(y: int.parse(asplit[0]) , m: int.parse(asplit[1]), d: int.parse(asplit[2]));
+    String f = (formattedDate.year).toString() + "-" + (formattedDate.month).toString() + "-" + (formattedDate.date).toString();
+    if (f == todayStr){
+      todaySchedule.add(i);
+    }
+  }
+
+  return todaySchedule;
 }
