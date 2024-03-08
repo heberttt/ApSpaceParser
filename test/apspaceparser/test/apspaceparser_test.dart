@@ -12,11 +12,16 @@ void main() async {
   if (response.statusCode == 200) {
     List<dynamic> jsonData = json.decode(response.body);
 
+    while(true){
     print("Custom (Enter if not): ");
+
+    
 
     String intake = "APU2F2309IT(FT)";
 
     String? special = stdin.readLineSync();
+
+    print("");
 
     if (special == "hebert") {
       print("Special (Hebert)");
@@ -36,18 +41,24 @@ void main() async {
 
       String intake = stdin.readLineSync()!;
 
-      int numberOfWeeks = getNumberOfWeeks(getIntakeData(jsonData, intake));
-      Date thisMon = getThisWeekDate();
+      try{
+        int numberOfWeeks = getNumberOfWeeks(getIntakeData(jsonData, intake));
+        Date thisMon = getThisWeekDate();
 
-      for (int i = 0; i < numberOfWeeks; i++) {
-        print("${thisMon.date}-${thisMon.month}-${thisMon.year}");
-        Week w = Week(thisMon, jsonData, intake, "hebert");
-        FreeShifts f = FreeShifts(w);
-        f.printFreeWeeklyAvailableShifts();
-        thisMon.addDate(3);
+        for (int i = 0; i < numberOfWeeks; i++) {
+          print("${thisMon.date}-${thisMon.month}-${thisMon.year}");
+          Week w = Week(thisMon, jsonData, intake, "hebert");
+          FreeShifts f = FreeShifts(w);
+          f.printFreeWeeklyAvailableShifts();
+          thisMon.addDate(3);
+        } 
+      }on RangeError{
+          print("Intake does not exist in the data");
       }
+      
     }
-
+    print("");
+    }
     // Date eleven = Date(m: 3, d: 5, y: 2024);
 
     // List<dynamic> todaySchedule = getOneDaySchedule(getIntakeData(jsonData, intake), eleven);
