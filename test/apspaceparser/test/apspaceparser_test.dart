@@ -21,16 +21,18 @@ void main() async{
 
 		Week b = Week(eleven, jsonData);
 
-		print((b.monday)?.startTime);
-		print((b.monday)?.endTime);
-		print((b.tuesday)?.startTime);
-		print((b.tuesday)?.endTime);
-		print((b.wednesday)?.startTime);
-		print((b.wednesday)?.endTime);
-		print((b.thursday)?.startTime);
-		print((b.thursday)?.endTime);
-		print((b.friday)?.startTime);
-		print((b.friday)?.endTime);
+    int numberOfWeeks = getNumberOfWeeks(getIntakeData(jsonData, "APU2F2309SE"));
+    Date thisMon = getThisWeekDate();
+    
+
+    for (int i = 0; i < numberOfWeeks; i++){
+      Week w = Week(thisMon, jsonData);
+      w.printSchedule();
+      thisMon.addDate(3);
+    }
+
+    
+
 
 		// if(jsonData != null){
 		// 	print(getThisWeekMondayDate(jsonData, "APU2F2309SE"));

@@ -4,9 +4,8 @@ class Day{
   Date? date;
   List<dynamic> todaySchedule = [];
   
-  Day(Date d, List<dynamic> todaySchedule){
+  Day(Date d, this.todaySchedule){ // immideatly put to todaySchedule
     date = d;
-    this.todaySchedule = todaySchedule;
     getStartAndEndTime();
   }
 
@@ -41,6 +40,20 @@ class Week{
     thursday = Day(start, getOneDaySchedule(getIntakeData(data,"APU2F2309SE"), start));
     start.addDate(1);
     friday = Day(start, getOneDaySchedule(getIntakeData(data,"APU2F2309SE"), start));
+  }
+
+  void printSchedule(){
+      print(monday?.startTime);
+      print((monday)?.endTime);
+      print((tuesday)?.startTime);
+      print((tuesday)?.endTime);
+      print((wednesday)?.startTime);
+      print((wednesday)?.endTime);
+      print((thursday)?.startTime);
+      print((thursday)?.endTime);
+      print((friday)?.startTime);
+      print((friday)?.endTime);
+      print("-----------------------------------------");
   }
 
 
@@ -180,7 +193,7 @@ List<dynamic> getIntakeData(List<dynamic> data, String intake){
 }
 
 
-Date getThisWeekDate(List<dynamic> data){
+Date getThisWeekDate(){
   DateTime today = DateTime.now();
   int currentDay = today.weekday;
 
@@ -192,12 +205,10 @@ Date getThisWeekDate(List<dynamic> data){
 }
 
 int getNumberOfWeeks(List<dynamic> data){
-  Date thisMon = getThisWeekDate(data);
-
-  Date nextMon = getThisWeekDate(data);
+  Date nextMon = getThisWeekDate();
   nextMon.addDate(7);
 
-  Date twoNextMon = getThisWeekDate(data);
+  Date twoNextMon = getThisWeekDate();
   nextMon.addDate(14);
 
   var lastIndex = data[data.length - 1];
@@ -216,7 +227,7 @@ int getNumberOfWeeks(List<dynamic> data){
 }
 
 List<dynamic> getOneDaySchedule(List<dynamic> schedule, Date today){
-  String todayStr = (today.year).toString() + "-" + (today.month).toString() + "-" + (today.date).toString();
+  String todayStr = "${today.year}-${today.month}-${today.date}";
   List<dynamic> todaySchedule = [];
 
   
@@ -225,7 +236,7 @@ List<dynamic> getOneDaySchedule(List<dynamic> schedule, Date today){
     String a = i['DATESTAMP_ISO'];
     List<String> asplit = a.split("-");
     Date formattedDate = Date(y: int.parse(asplit[0]) , m: int.parse(asplit[1]), d: int.parse(asplit[2]));
-    String f = (formattedDate.year).toString() + "-" + (formattedDate.month).toString() + "-" + (formattedDate.date).toString();
+    String f = "${formattedDate.year}-${formattedDate.month}-${formattedDate.date}";
     if (f == todayStr){
       todaySchedule.add(i);
     }
