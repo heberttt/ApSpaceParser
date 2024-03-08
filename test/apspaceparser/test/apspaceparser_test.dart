@@ -10,14 +10,24 @@ void main() async{
 	if(response.statusCode == 200){
 		List<dynamic> jsonData = json.decode(response.body);
 
-    
+		Date a = getThisAndNextWeekDate(jsonData, "APU2F2309SE");
 
-		for (var element in jsonData){
-			if  (element['INTAKE'] == "APU2F2309SE"){
-				print(element);
+		print(a.date);
+		print(a.month);
+		print(a.year);
+
+		// if(jsonData != null){
+		// 	print(getThisWeekMondayDate(jsonData, "APU2F2309SE"));
+		// }else{
+		// 	print("Next week schedule is not available yet.");
+		// }
+
+		// for (var element in jsonData){
+		// 	if  (element['INTAKE'] == "APU2F2309SE"){
+		// 		//print(element);
         
-			}
-		}
+		// 	}
+		// }
 
 		
 		
