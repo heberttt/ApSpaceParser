@@ -1,13 +1,16 @@
+import 'package:http/http.dart';
+
 class Day{
   List<int> startTime = [];
   List<int> endTime = [];
-  Date? date;
+  Date date;
   List<dynamic> todaySchedule = [];
   
-  Day(Date d, this.todaySchedule){ // immideatly put to todaySchedule
-    date = d;
+  Day(this.date, this.todaySchedule){ // immideatly put to todaySchedule
     getStartAndEndTime();
   }
+
+  
 
   void getStartAndEndTime(){
     for(var i in todaySchedule){
@@ -24,35 +27,35 @@ class Day{
 }
 
 class Week{
-  Day? monday;
-  Day? tuesday;
-  Day? wednesday;
-  Day? thursday;
-  Day? friday;
+  late Day monday;
+  late Day tuesday;
+  late Day wednesday;
+  late Day thursday;
+  late Day friday;
 
-  Week(Date start, List<dynamic> data){
-    monday = Day(start, getOneDaySchedule(getIntakeData(data,"APU2F2309SE"), start));
+  Week(Date start, List<dynamic> data, String intake){
+    monday = Day(start, getOneDaySchedule(getIntakeData(data,intake), start));
     start.addDate(1);
-    tuesday = Day(start, getOneDaySchedule(getIntakeData(data,"APU2F2309SE"), start));
+    tuesday = Day(start, getOneDaySchedule(getIntakeData(data, intake), start));
     start.addDate(1);
-    wednesday = Day(start, getOneDaySchedule(getIntakeData(data,"APU2F2309SE"), start));
+    wednesday = Day(start, getOneDaySchedule(getIntakeData(data,intake), start));
     start.addDate(1);
-    thursday = Day(start, getOneDaySchedule(getIntakeData(data,"APU2F2309SE"), start));
+    thursday = Day(start, getOneDaySchedule(getIntakeData(data, intake), start));
     start.addDate(1);
-    friday = Day(start, getOneDaySchedule(getIntakeData(data,"APU2F2309SE"), start));
+    friday = Day(start, getOneDaySchedule(getIntakeData(data, intake), start));
   }
 
   void printSchedule(){
-      print(monday?.startTime);
-      print((monday)?.endTime);
-      print((tuesday)?.startTime);
-      print((tuesday)?.endTime);
-      print((wednesday)?.startTime);
-      print((wednesday)?.endTime);
-      print((thursday)?.startTime);
-      print((thursday)?.endTime);
-      print((friday)?.startTime);
-      print((friday)?.endTime);
+      print(monday.startTime);
+      print((monday).endTime);
+      print((tuesday).startTime);
+      print((tuesday).endTime);
+      print((wednesday).startTime);
+      print((wednesday).endTime);
+      print((thursday).startTime);
+      print((thursday).endTime);
+      print((friday).startTime);
+      print((friday).endTime);
       print("-----------------------------------------");
   }
 
@@ -80,7 +83,7 @@ class Time{
   int getTime(){
     String result = "$hour$minute";
     if (minute == 0){
-      result = hour.toString() + "00";
+      result = "${hour}00";
     }
     return int.parse(result);
   }
@@ -192,6 +195,20 @@ List<dynamic> getIntakeData(List<dynamic> data, String intake){
 
 }
 
+List<dynamic> getHebertData(List<dynamic> data, String intake){
+  List<dynamic>? filteredData = [];
+  
+  for (var i in data){
+    if (i['INTAKE'] == intake && i['MODID'] != "CT074-3-2-CCP-L-1" && i['MODID'] != "CT117-3-2-FWDD-LAB1" && i['MODID'] != "CT074-3-2-CCP-LAB-1" && i['MODID'] != "MPU3412-CC2-L-1 (Online)" && i['MODID'] != "CT117-3-2-FWDD-L-1"){
+      filteredData.add(i);
+    }
+  }
+
+  return filteredData;
+
+}
+
+
 
 Date getThisWeekDate(){
   DateTime today = DateTime.now();
@@ -244,3 +261,91 @@ List<dynamic> getOneDaySchedule(List<dynamic> schedule, Date today){
 
   return todaySchedule;
 }
+
+
+
+List<int> getAvailableShifts(Day d){
+
+  List<int> startShift = [830,1030,1130,1230,1330,1430,1530,1630,1730,1900];
+  List<int> endShift = [1030,1130,1230,1330,1430,1530,1630,1730,1900,2130];
+
+  List<int> availableShifts = [1,2,3,4,5,6,7,8,9,10];
+
+  for (int i = 0; i < d.startTime.length ; i++ ){
+    for (int j = 0; j < startShift.length; j++){
+      if (d.startTime[i] <= startShift[j] && startShift[j] <= d.endTime[i]){
+        availableShifts[j] = -1;
+      }else if (d.startTime[i] < endShift[j] && endShift[j] <= d.endTime[i]){ // if the class ends when the shift starts, the shift is not included
+        availableShifts[j] = 0;
+      }
+    }
+  }
+
+
+
+  return availableShifts; 
+}
+
+class FreeShifts{
+  late List<int> monday;
+  late List<int> tuesday;
+  late List<int> wednesday;
+  late List<int> thursday;
+  late List<int> friday;
+  
+  late Week week;
+
+
+  late String mon;
+  late String tue;
+  late String wed;
+  late String thu;
+  late String fri;
+
+
+  void changeToString(List<int> m, List<int> t, List<int> w, List<int> th, List<int> f){
+    mon = changeToStringOne(m);
+    tue = changeToStringOne(t);
+    wed = changeToStringOne(w);
+    thu = changeToStringOne(th);
+    fri = changeToStringOne(f);
+  }
+
+  String changeToStringOne(List<int> a){
+    String result = "";
+    for (int i in a){
+      if (i <= 0){
+        continue;
+      }
+      result += "S$i,";
+    }
+    if (result.isNotEmpty){
+      result = result.substring(0, result.length-1);
+    }
+    return result;
+  }
+
+  FreeShifts(Week w){
+    getWeeklyAvailableShifts(w);
+    changeToString(monday, tuesday, wednesday, thursday, friday);
+    week = w;
+  }
+
+  void getWeeklyAvailableShifts(Week week){
+    monday = getAvailableShifts(week.monday);
+    tuesday = getAvailableShifts(week.tuesday);
+    wednesday = getAvailableShifts(week.wednesday);
+    thursday = getAvailableShifts(week.thursday);
+    friday = getAvailableShifts(week.friday);
+  }
+
+
+  void printFreeWeeklyAvailableShifts(){
+    print("Monday: $mon");
+    print("Tuesday: $tue");
+    print("Wednesday: $wed");
+    print("Thursday: $thu");
+    print("Friday: $fri");
+  }
+}
+

@@ -10,44 +10,28 @@ void main() async{
 	if(response.statusCode == 200){
 		List<dynamic> jsonData = json.decode(response.body);
 
+    String intake = "APU2F2309SE";
 
-
-		print(getNumberOfWeeks(getIntakeData(jsonData, "APU2F2309SE")));
-		Date eleven = Date(m: 3, d:11, y:2024);
+		print(getNumberOfWeeks(getIntakeData(jsonData, intake)));
+		Date eleven = Date(m: 3, d:15, y:2024);
 		
-		List<dynamic> todaySchedule = getOneDaySchedule(getIntakeData(jsonData,"APU2F2309SE"), eleven);
+		List<dynamic> todaySchedule = getOneDaySchedule(getIntakeData(jsonData, intake), eleven);
 
 		Day a = Day(eleven, todaySchedule);
 
-		Week b = Week(eleven, jsonData);
+		
 
-    int numberOfWeeks = getNumberOfWeeks(getIntakeData(jsonData, "APU2F2309SE"));
+    int numberOfWeeks = getNumberOfWeeks(getIntakeData(jsonData, intake));
     Date thisMon = getThisWeekDate();
     
-
     for (int i = 0; i < numberOfWeeks; i++){
-      Week w = Week(thisMon, jsonData);
-      w.printSchedule();
+      print("${thisMon.date}-${thisMon.month}-${thisMon.year}");
+      Week w = Week(thisMon, jsonData, intake);
+      FreeShifts f = FreeShifts(w);
+      f.printFreeWeeklyAvailableShifts();
       thisMon.addDate(3);
     }
 
-    
-
-
-		// if(jsonData != null){
-		// 	print(getThisWeekMondayDate(jsonData, "APU2F2309SE"));
-		// }else{
-		// 	print("Next week schedule is not available yet.");
-		// }
-
-		// for (var element in jsonData){
-		// 	if  (element['INTAKE'] == "APU2F2309SE"){
-		// 		//print(element);
-        
-		// 	}
-		// }
-
-		
 		
 
 	}else{
