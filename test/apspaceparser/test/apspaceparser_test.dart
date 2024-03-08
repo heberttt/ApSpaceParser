@@ -19,8 +19,18 @@ void main() async{
 
 		Day a = Day(eleven, todaySchedule);
 
-		print(a.startTime);
-		print(a.endTime);
+		Week b = Week(eleven, jsonData);
+
+		print((b.monday)?.startTime);
+		print((b.monday)?.endTime);
+		print((b.tuesday)?.startTime);
+		print((b.tuesday)?.endTime);
+		print((b.wednesday)?.startTime);
+		print((b.wednesday)?.endTime);
+		print((b.thursday)?.startTime);
+		print((b.thursday)?.endTime);
+		print((b.friday)?.startTime);
+		print((b.friday)?.endTime);
 
 		// if(jsonData != null){
 		// 	print(getThisWeekMondayDate(jsonData, "APU2F2309SE"));

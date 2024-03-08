@@ -24,6 +24,29 @@ class Day{
 
 }
 
+class Week{
+  Day? monday;
+  Day? tuesday;
+  Day? wednesday;
+  Day? thursday;
+  Day? friday;
+
+  Week(Date start, List<dynamic> data){
+    monday = Day(start, getOneDaySchedule(getIntakeData(data,"APU2F2309SE"), start));
+    start.addDate(1);
+    tuesday = Day(start, getOneDaySchedule(getIntakeData(data,"APU2F2309SE"), start));
+    start.addDate(1);
+    wednesday = Day(start, getOneDaySchedule(getIntakeData(data,"APU2F2309SE"), start));
+    start.addDate(1);
+    thursday = Day(start, getOneDaySchedule(getIntakeData(data,"APU2F2309SE"), start));
+    start.addDate(1);
+    friday = Day(start, getOneDaySchedule(getIntakeData(data,"APU2F2309SE"), start));
+  }
+
+
+  
+}
+
 class Time{
   int hour = 0;
   int minute = 0;
@@ -43,6 +66,9 @@ class Time{
   }
   int getTime(){
     String result = "$hour$minute";
+    if (minute == 0){
+      result = hour.toString() + "00";
+    }
     return int.parse(result);
   }
 
@@ -138,17 +164,7 @@ class Date{
 
 }
 
-class Week{
-  Day? monday;
-  Day? tuesday;
-  Day? wednesday;
-  Day? thursday;
-  Day? friday;
 
-  Date mon
-
-  
-}
 
 List<dynamic> getIntakeData(List<dynamic> data, String intake){
   List<dynamic>? filteredData = [];
