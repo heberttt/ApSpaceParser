@@ -33,16 +33,31 @@ class Week{
   late Day thursday;
   late Day friday;
 
-  Week(Date start, List<dynamic> data, String intake){
-    monday = Day(start, getOneDaySchedule(getIntakeData(data,intake), start));
-    start.addDate(1);
-    tuesday = Day(start, getOneDaySchedule(getIntakeData(data, intake), start));
-    start.addDate(1);
-    wednesday = Day(start, getOneDaySchedule(getIntakeData(data,intake), start));
-    start.addDate(1);
-    thursday = Day(start, getOneDaySchedule(getIntakeData(data, intake), start));
-    start.addDate(1);
-    friday = Day(start, getOneDaySchedule(getIntakeData(data, intake), start));
+  Week(Date start, List<dynamic> data, String intake, String? special){
+    
+    if(special == "hebert"){
+      
+      monday = Day(start, getOneDaySchedule(getHebertData(data,intake), start));
+      start.addDate(1);
+      tuesday = Day(start, getOneDaySchedule(getHebertData(data, intake), start));
+      start.addDate(1);
+      wednesday = Day(start, getOneDaySchedule(getHebertData(data,intake), start));
+      start.addDate(1);
+      thursday = Day(start, getOneDaySchedule(getHebertData(data, intake), start));
+      start.addDate(1);
+      friday = Day(start, getOneDaySchedule(getHebertData(data, intake), start));
+    }else{
+      monday = Day(start, getOneDaySchedule(getIntakeData(data,intake), start));
+      start.addDate(1);
+      tuesday = Day(start, getOneDaySchedule(getIntakeData(data, intake), start));
+      start.addDate(1);
+      wednesday = Day(start, getOneDaySchedule(getIntakeData(data,intake), start));
+      start.addDate(1);
+      thursday = Day(start, getOneDaySchedule(getIntakeData(data, intake), start));
+      start.addDate(1);
+      friday = Day(start, getOneDaySchedule(getIntakeData(data, intake), start));
+    }
+    
   }
 
   void printSchedule(){
@@ -278,10 +293,11 @@ List<int> getAvailableShifts(Day d){
       }else if (d.startTime[i] < endShift[j] && endShift[j] <= d.endTime[i]){ // if the class ends when the shift starts, the shift is not included
         availableShifts[j] = 0;
       }
+      else if(d.startTime[i] >= startShift[j] && d.endTime[i] <= endShift[j]){
+        availableShifts[j] = -2;
+      }
     }
   }
-
-
 
   return availableShifts; 
 }
