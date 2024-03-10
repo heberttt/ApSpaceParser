@@ -11,11 +11,10 @@ void main() async {
   var response = await http.get(url);
   if (response.statusCode == 200) {
     List<dynamic> jsonData = json.decode(response.body);
-
     while (true) {
       print("Custom (Enter if not): ");
 
-      var technicalAssistantsIntakes = await getJson(await getPath());
+      var technicalAssistantsIntakes = await getJson(getPath());
 
       List<dynamic> taData = technicalAssistantsIntakes;
 

@@ -380,17 +380,13 @@ class FreeShifts{
   }
 }
 
-Frame _frame() {
-  return Frame.caller(1);
-}
 
 
-Future<String> getPath() async{
-  final frame = _frame();
-  String path = frame.uri.path;
-  List<String> pathArr = path.split("/");
+String getPath(){
+  String path = Directory.current.path;
+  List<String> pathArr = path.split("\\");
   String result = "";
-  for(int i = 1; i < pathArr.length - 1 ; i ++){
+  for(int i = 0; i < pathArr.length; i++){
     result += pathArr[i];
     result += "/";
   }
@@ -428,7 +424,7 @@ List<dynamic> getAllWeekFreeShifts(List<dynamic> taData, List<dynamic> jsonData,
     String taName = ta['name'];
 
     if (intake == ""){
-      continue;
+      continue; 
     }
 
     
