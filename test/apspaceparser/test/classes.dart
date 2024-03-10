@@ -404,6 +404,7 @@ dynamic getJson(String path) async{
     return map;
   }on PathNotFoundException{
     print("technicalAssistantsIntake.json doesn't exist in this path");
+    String? s = stdin.readLineSync();
     exit(404);
   }
   

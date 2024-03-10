@@ -14,9 +14,7 @@ void main() async {
     while (true) {
       print("Custom (Enter if not): ");
 
-      var technicalAssistantsIntakes = await getJson(getPath());
-
-      List<dynamic> taData = technicalAssistantsIntakes;
+      
 
       String intake = "APU2F2309IT(FT)";
 
@@ -40,6 +38,9 @@ void main() async {
       } else if (special == "exit") {
         exit(0);
       } else if (special == "hr") {
+        var technicalAssistantsIntakes = await getJson(getPath());
+
+        List<dynamic> taData = technicalAssistantsIntakes;
         while (true) {
           Date thisMon1 = getThisWeekDate();
           int weekQuantity = getNumberOfWeeks(jsonData);
