@@ -1,4 +1,6 @@
-
+import 'package:stack_trace/stack_trace.dart';
+import 'dart:io';
+import 'dart:convert';
 
 class Day{
   List<int> startTime = [];
@@ -164,6 +166,7 @@ class Date{
       return 31;
     }
   }
+  
 
   bool compareDate(String m){
     List<String> ymdMB = m.split("-");
@@ -363,5 +366,112 @@ class FreeShifts{
     print("Thursday: $thu");
     print("Friday: $fri");
   }
+
+  Map<String, String> getFreeWeeklyAvailableShifts(){
+    Map<String,String> result = {
+      'Monday' : mon,
+      "Tuesday" : tue,
+      "Wednesday" : wed,
+      "Thursday" : thu,
+      "Friday" : fri
+    };
+
+    return result;
+  }
 }
 
+Frame _frame() {
+  return Frame.caller(1);
+}
+
+
+Future<String> getPath() async{
+  final frame = _frame();
+  String path = frame.uri.path;
+  List<String> pathArr = path.split("/");
+  String result = "";
+  for(int i = 1; i < pathArr.length - 1 ; i ++){
+    result += pathArr[i];
+    result += "/";
+  }
+
+  result += "technicalAssistantsIntake.json";
+
+  return result;
+}
+
+dynamic getJson(String path) async{
+  try{
+    var input = await File(path).readAsString();
+    var map = jsonDecode(input);
+    
+    return map;
+  }on PathNotFoundException{
+    print("technicalAssistantsIntake.json doesn't exist in this path");
+    exit(404);
+  }
+  
+}
+
+List<dynamic> getAllWeekFreeShifts(List<dynamic> taData, List<dynamic> jsonData, int numOfWeek){
+  List<dynamic> allWeekFreeShifts = [];
+
+  for (var ta in taData){
+    Date secondThisMon = getThisWeekDate();
+    if (numOfWeek == 2){
+      secondThisMon.addDate(7);
+    }
+    else if (numOfWeek == 3){
+      secondThisMon.addDate(14);
+    }
+    String intake = ta['intake'];
+    String taName = ta['name'];
+
+    if (intake == ""){
+      continue;
+    }
+
+    
+    Week w = Week(secondThisMon, jsonData, intake, "");
+    FreeShifts freeShifts =  FreeShifts(w);
+    Map<String, dynamic> scheduleMap = {
+      'intake' : intake,
+      'name' : taName,
+      'Schedule' : freeShifts.getFreeWeeklyAvailableShifts()
+    };
+    allWeekFreeShifts.add(scheduleMap);
+    
+    
+  }
+  
+  return allWeekFreeShifts;
+}
+
+
+void getUnknownIntake(List<dynamic> taData){
+  
+  List<String> unknownIntake = [];
+  for (var ta in taData){
+    String intake = ta['intake'];
+    String taName = ta['name'];
+    if (intake == ""){
+      unknownIntake.add(taName);
+      continue;
+    }
+  }
+  if (unknownIntake.isNotEmpty){
+    print("$unknownIntake, these TAs does not have an intake yet. Please edit the technicalAssistansIntake.json");
+  }
+}
+
+class AllWeeks{
+  Week? week1;
+  Week? week2;
+  Week? week3;
+
+  AllWeeks({w1,w2,w3}){
+    week1 = w1;
+    week2 = w2;
+    week3 = w3;
+  }
+}
