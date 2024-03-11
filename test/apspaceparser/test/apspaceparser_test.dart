@@ -14,8 +14,6 @@ void main() async {
     while (true) {
       print("Custom (Enter if not): ");
 
-      
-
       String intake = "APU2F2309IT(FT)";
 
       String? special = stdin.readLineSync();

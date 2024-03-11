@@ -174,13 +174,13 @@ class Date{
     List<int> ymdM = [int.parse(ymdMB[0]), int.parse(ymdMB[1]), int.parse(ymdMB[2])];
     List<int> ymdT = [int.parse(ymdTB[0]), int.parse(ymdTB[1]), int.parse(ymdTB[2])];
 
-    if (ymdM[0] > ymdT[0]){
+    if (ymdM[0] < ymdT[0]){
       return true;
     }else if (ymdM[0] == ymdT[0]){
-      if (ymdM[1] > ymdT[1]){
+      if (ymdM[1] < ymdT[1]){
         return true;
       }else if(ymdM[1] == ymdT[1]){
-        if (ymdM[2] > ymdT[2]){
+        if (ymdM[2] < ymdT[2]){
           return true;
         }else if (ymdM[2] == ymdT[0]){
           return false;   // if both days are mondays, it will not accept (change when needed)
