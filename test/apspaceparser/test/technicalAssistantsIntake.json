@@ -1,150 +1,187 @@
 [
     {
         "name": "Hebert Pratama",
-        "intake": "APU2F2309SE"
+        "intake": "APU2F2309SE",
+        "group" : "none"
     },
     {
         "name": "Michaell Ang",
-        "intake": "APU2F2309IT(IOT)"
+        "intake": "APU2F2309IT(IOT)",
+        "group" : "none"
     },
     {
         "name": "Amjad Alrifaai",
-        "intake": "APD2F2402CS(CYB)"
+        "intake": "APD2F2402CS(CYB)",
+        "group" : "none"
     },
     {
         "name": "Cerise Loo Lok Yu",
-        "intake": "APU2F2402CS(DA)"
+        "intake": "APU2F2402CS(DA)",
+        "group" : "none"
     },
     {
         "name": "Yeak Jong Ping",
-        "intake": "UCDF2209ICT(SE)"
+        "intake": "UCDF2209ICT(SE)",
+        "group" : "none"
     },
     {
         "name": "Chennupati Sai Dheeraj",
-        "intake": "APU2F2309CE"
+        "intake": "APU2F2309CE",
+        "group" : "none"
     },
     {
         "name": "Yasir Mohamed",
-        "intake": "APD2F2402CS"
+        "intake": "APD2F2402CS",
+        "group" : "none"
     },
     {
         "name": "Farah Wesam",
-        "intake": "APD2F2309ME"
+        "intake": "APD2F2309ME",
+        "group" : "none"
     },
     {
         "name": "Lee Qiu Ting",
-        "intake": "UCDF2209ICT(ITR)"
+        "intake": "UCDF2209ICT(ITR)",
+        "group" : "none"
     },
     {
         "name": "Saputra",
-        "intake": "APU2F2309CS(DA)"
+        "intake": "APU2F2309CS(DA)",
+        "group" : "none"
     },
     {
         "name": "Khoo Ji Qiang",
-        "intake": "UCDF2307ICT(SE)"
+        "intake": "UCDF2307ICT(SE)",
+        "group" : "G1"
     },
     {
         "name": "Yahya Hussein",
-        "intake": ""
+        "intake": "",
+        "group" : "none"
     },
     {
         "name": "Nway Yupar Aung",
-        "intake": "APU1F2309CS(AI)"
+        "intake": "APU1F2309CS(AI)",
+        "group" : "none"
     },
     {
         "name": "Mohammed Eshan",
-        "intake": "APD1F2307EEE"
+        "intake": "APD1F2307EEE",
+        "group" : "none"
     },
     {
         "name": "Abdelrahman Mohamed Shawky",
-        "intake": "APD2F2309CE"
+        "intake": "APD2F2309CE",
+        "group" : "none"
     },
     {
         "name": "Lucius Wilbert Tjoa",
-        "intake": "APD1F2309CS(AI)"
+        "intake": "APD1F2309CS(AI)",
+        "group" : "none"
     },
     {
         "name": "Abdullah Ahmad",
-        "intake": "APD2F2309CS(IS)"
+        "intake": "APD2F2309CS(IS)",
+        "group" : "none"
     },
     {
         "name": "Zahra Mehboob",
-        "intake": "APD2F2309CE"
+        "intake": "APD2F2309CE",
+        "group" : "none"
     },
     {
         "name": "Kong Jia Cheng",
-        "intake": "UCDF2308ICT(SE)"
+        "intake": "UCDF2308ICT(SE)",
+        "group" : "none"
     },
     {
         "name": "Yehia Rasheed",
-        "intake": ""
+        "intake": "",
+        "group" : "none"
     },
     {
         "name": "Yap Wei Xing",
-        "intake": "UCDF2207ICT(SE)"
+        "intake": "UCDF2207ICT(SE)",
+        "group" : "none"
     },
     {
         "name": "Seif Rashid Seif",
-        "intake": "UCDF2304ICT(SE)"
+        "intake": "UCDF2304ICT(SE)",
+        "group" : "none"
     },
     {
         "name": "Abakar Sougui Fatime",
-        "intake": ""
+        "intake": "",
+        "group" : "none"
     },
     {
         "name": "Wong Ming Soon",
-        "intake": "APD1F2307CS(CYB)"
+        "intake": "APD1F2307CS(CYB)",
+        "group" : "none"
     },
     {
         "name": "Mass Asaan",
-        "intake": "APU2F2309CS"
+        "intake": "APU2F2309CS",
+        "group" : "none"
     },
     {
         "name": "Minhal Ali",
-        "intake": "APD2F2402CS(CYB)"
+        "intake": "APD2F2402CS(CYB)",
+        "group" : "none"
     },
     {
         "name": "Calvin Hosea",
-        "intake": ""
+        "intake": "",
+        "group" : "none"
     },
     {
         "name": "Gogala Selvam",
-        "intake": "UCDF2209ICT(SE)"
+        "intake": "UCDF2209ICT(SE)",
+        "group" : "none"
     },
     {
         "name": "Fatma Walid Mohamed",
-        "intake": "APD2F2402SE"
+        "intake": "APD2F2402SE",
+        "group" : "none"
     },
     {
         "name": "Rauhan Rasheed Siddiqui",
-        "intake": ""
+        "intake": "",
+        "group" : "none"
     },
     {
         "name": "Wong Jun Hei",
-        "intake": ""
+        "intake": "",
+        "group" : "none"
     },
     {
         "name": "Kelvin Vallian Guinawa",
-        "intake": ""
+        "intake": "",
+        "group" : "none"
     },
     {
         "name": "Teh Jun Hao",
-        "intake": "UCDF2204ICT(SE)"
+        "intake": "UCDF2204ICT(SE)",
+        "group" : "none"
     },
     {
         "name": "Youssef Ahmed Mansour",
-        "intake": ""
+        "intake": "",
+        "group" : "none"
     },
     {
         "name": "Musab Salah",
-        "intake": ""
+        "intake": "",
+        "group" : "none"
     },
     {
         "name": "Jovin Gazali",
-        "intake": "APU2F2309CS"
+        "intake": "APU2F2309CS",
+        "group" : "none"
     },
     {
         "name": "Muhammad Hussain Rana",
-        "intake": "UCDF2304ICT(SE)"
+        "intake": "UCDF2304ICT(SE)",
+        "group" : "none"
     } 
 ]
