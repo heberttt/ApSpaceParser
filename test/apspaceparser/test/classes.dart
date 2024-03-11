@@ -360,21 +360,41 @@ class FreeShifts{
 
 
   void printFreeWeeklyAvailableShifts(){
-    print("Monday: $mon");
-    print("Tuesday: $tue");
-    print("Wednesday: $wed");
-    print("Thursday: $thu");
-    print("Friday: $fri");
+    String allFree = "S1,S2,S3,S4,S5,S6,S7,S8,S9,S10";
+    if(mon == allFree && tue == allFree && wed == allFree && thu == allFree && fri == allFree){
+      print("You don't have any classes in ApSpace for this week (Either you are on break or there is no schedule for this week yet)");
+    }else{
+      print("Monday: $mon");
+      print("Tuesday: $tue");
+      print("Wednesday: $wed");
+      print("Thursday: $thu");
+      print("Friday: $fri");
+    }
+    
   }
 
+
+
   Map<String, String> getFreeWeeklyAvailableShifts(){
-    Map<String,String> result = {
+    String allFree = "S1,S2,S3,S4,S5,S6,S7,S8,S9,S10";
+    Map<String,String> result = {};
+    if(mon == allFree && tue == allFree && wed == allFree && thu == allFree && fri == allFree){
+      result = {
+      'Monday' : '',
+      "Tuesday" : '',
+      "Wednesday" : '',
+      "Thursday" : '',
+      "Friday" : ''
+      };
+    }else{
+      result = {
       'Monday' : mon,
       "Tuesday" : tue,
       "Wednesday" : wed,
       "Thursday" : thu,
       "Friday" : fri
-    };
+      };
+    }
 
     return result;
   }

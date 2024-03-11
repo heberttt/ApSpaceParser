@@ -86,6 +86,7 @@ void main() async {
 
             List<dynamic> freeShiftForThisWeek = [];
             List<String> availableTas = [];
+            List<String> ambiguousTas = [];
 
             if (selectedWeek == thisWeek){
               freeShiftForThisWeek = allFreeShifts[0];
@@ -94,6 +95,9 @@ void main() async {
                 List<String> freeShiftArr = freeShiftStr.split(",");
                 if (freeShiftArr.contains("S$selectedShift")){
                   availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
+                }
+                if (freeShiftStr == ''){
+                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
                 }
               }
               
@@ -104,6 +108,8 @@ void main() async {
                 List<String> freeShiftArr = freeShiftStr.split(",");
                 if (freeShiftArr.contains("S$selectedShift")){
                   availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
+                }if (freeShiftStr == ''){
+                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
                 }
               }
             }else if (selectedWeek == thirdWeek){
@@ -113,10 +119,14 @@ void main() async {
                 List<String> freeShiftArr = freeShiftStr.split(",");
                 if (freeShiftArr.contains("S$selectedShift")){
                   availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
+                }if (freeShiftStr == ''){
+                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
                 }
               }
             }
             getUnknownIntake(taData);
+            print("");
+            print("$ambiguousTas, these TA's schedule is not available yet for this week (Either on holiday or week not generated yet by ApSpace.)");
             print("");
             print("These TA are available at S$selectedShift on $selectedDay for the Week of $selectedWeek: ");
             for (var technicalAssistant in availableTas){
