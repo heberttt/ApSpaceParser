@@ -124,10 +124,14 @@ void main() async {
                 }
               }
             }
+            print("");
             getUnknownIntake(taData);
             print("");
-            print("$ambiguousTas, these TA's schedule is not available yet for this week (Either on holiday or week not generated yet by ApSpace.)");
-            print("");
+            if(ambiguousTas.isNotEmpty){
+              print("$ambiguousTas, these TA's schedule is not available yet for this week (Either on holiday or week not generated yet by ApSpace.)");
+              print("");
+            }
+            
             print("These TA are available at S$selectedShift on $selectedDay for the Week of $selectedWeek: ");
             for (var technicalAssistant in availableTas){
               print(technicalAssistant);
