@@ -242,23 +242,24 @@ Date getThisWeekDate(){
 int getNumberOfWeeks(List<dynamic> data){
   Date nextMon = getThisWeekDate();
   nextMon.addDate(7);
-
-  Date twoNextMon = getThisWeekDate();
-  nextMon.addDate(14);
-
   var lastIndex = data[data.length - 1];
-
   String lastDate = lastIndex['DATESTAMP_ISO'];
 
-  if(twoNextMon.compareDate(lastDate)){
-    return 3;
+  if(!nextMon.compareDate(lastDate)){
+    nextMon.addDate(7);
+    if (!nextMon.compareDate(lastDate)){
+      nextMon.addDate(7);
+      if (!nextMon.compareDate(lastDate)){
+        return 3;
+      }
+      return 2;
+    }
+    return 1;
   }
-  else if (nextMon.compareDate(lastDate)){
-    return 2;
-  }
-  
-  return 1;
 
+  
+
+  return 1;
 }
 
 List<dynamic> getOneDaySchedule(List<dynamic> schedule, Date today){
