@@ -12,7 +12,7 @@
     {
         "name": "Amjad Alrifaai",
         "intake": "APD2F2402CS(CYB)",
-        "group" : "none"
+        "group" : "G3"
     },
     {
         "name": "Cerise Loo Lok Yu",
@@ -22,7 +22,7 @@
     {
         "name": "Yeak Jong Ping",
         "intake": "UCDF2209ICT(SE)",
-        "group" : "none"
+        "group" : "G4"
     },
     {
         "name": "Chennupati Sai Dheeraj",
@@ -30,14 +30,9 @@
         "group" : "none"
     },
     {
-        "name": "Yasir Mohamed",
-        "intake": "APD2F2402CS",
-        "group" : "none"
-    },
-    {
         "name": "Farah Wesam",
         "intake": "APD2F2309ME",
-        "group" : "none"
+        "group" : "G1"
     },
     {
         "name": "Lee Qiu Ting",
@@ -47,16 +42,16 @@
     {
         "name": "Saputra",
         "intake": "APU2F2309CS(DA)",
-        "group" : "none"
+        "group" : "G2"
     },
     {
         "name": "Khoo Ji Qiang",
         "intake": "UCDF2307ICT(SE)",
-        "group" : "G1"
+        "group" : "G2"
     },
     {
         "name": "Yahya Hussein",
-        "intake": "",
+        "intake": "APD1F2303CS(IS)",
         "group" : "none"
     },
     {
@@ -77,7 +72,7 @@
     {
         "name": "Lucius Wilbert Tjoa",
         "intake": "APD1F2309CS(AI)",
-        "group" : "none"
+        "group" : "G2"
     },
     {
         "name": "Abdullah Ahmad",
@@ -90,19 +85,14 @@
         "group" : "none"
     },
     {
-        "name": "Kong Jia Cheng",
-        "intake": "UCDF2308ICT(SE)",
-        "group" : "none"
-    },
-    {
         "name": "Yehia Rasheed",
-        "intake": "",
+        "intake": "APD1F2303CS(IS)",
         "group" : "none"
     },
     {
         "name": "Yap Wei Xing",
         "intake": "UCDF2207ICT(SE)",
-        "group" : "none"
+        "group" : "G3"
     },
     {
         "name": "Seif Rashid Seif",
@@ -111,13 +101,13 @@
     },
     {
         "name": "Abakar Sougui Fatime",
-        "intake": "",
+        "intake": "APU1F2303CS",
         "group" : "none"
     },
     {
         "name": "Wong Ming Soon",
         "intake": "APD1F2307CS(CYB)",
-        "group" : "none"
+        "group" : "G2"
     },
     {
         "name": "Mass Asaan",
@@ -131,7 +121,7 @@
     },
     {
         "name": "Calvin Hosea",
-        "intake": "",
+        "intake": "APU2F2311SE",
         "group" : "none"
     },
     {
@@ -142,36 +132,26 @@
     {
         "name": "Fatma Walid Mohamed",
         "intake": "APD2F2402SE",
-        "group" : "none"
+        "group" : "G1"
     },
     {
         "name": "Rauhan Rasheed Siddiqui",
-        "intake": "",
+        "intake": "APD3F2311CE",
         "group" : "none"
     },
     {
         "name": "Wong Jun Hei",
-        "intake": "",
+        "intake": "APU2F2311IT(CE)",
         "group" : "none"
     },
     {
         "name": "Kelvin Vallian Guinawa",
-        "intake": "",
-        "group" : "none"
-    },
-    {
-        "name": "Teh Jun Hao",
-        "intake": "UCDF2204ICT(SE)",
-        "group" : "none"
-    },
-    {
-        "name": "Youssef Ahmed Mansour",
-        "intake": "",
-        "group" : "none"
+        "intake": "APD2F2402CS(CYB)",
+        "group" : "G2"
     },
     {
         "name": "Musab Salah",
-        "intake": "",
+        "intake": "APD1F2309CS(CYB)",
         "group" : "none"
     },
     {
@@ -183,5 +163,56 @@
         "name": "Muhammad Hussain Rana",
         "intake": "UCDF2304ICT(SE)",
         "group" : "none"
-    } 
+    } ,
+    {
+        "name": "Chee Man Shing Samuel",
+        "intake": "APD4F2311ME",
+        "group" : "G1"
+    } ,
+    {
+        "name": "Cho Zhan Heng",
+        "intake": "UCDF2204ICT(SE)",
+        "group" : "G1"
+    } ,
+    {
+        "name": "Lee Zhen Yong",
+        "intake": "APD2F2402CS(CYB)",
+        "group" : "G3"
+    } ,
+    {
+        "name": "Liew Jin Ann",
+        "intake": "APU2F2402SE",
+        "group" : "none"
+    } ,
+    {
+        "name": "Mohammad Rahmaan Khudurun",
+        "intake": "APD2F2309CS",
+        "group" : "none"
+    } ,
+    {
+        "name": "Mouaadh Nachef",
+        "intake": "APD1F2303CS(CYB)",
+        "group" : "G2"
+    } ,
+    {
+        "name": "Rafaiel Basem Tharwat Gad",
+        "intake": "UCDF2204ICT(SE)",
+        "group" : "G3"
+    } ,
+    {
+        "name": "Tai Eason",
+        "intake": "APU2F2402CS(CYB)",
+        "group" : "G2"
+    },
+    {
+        "name": "Tham Wing Hein",
+        "intake": "UCDF2204ICT(SE)",
+        "group" : "G3"
+    },
+    {
+        "name": "Zayed Ramadan Rahmat",
+        "intake": "APU2F2309CS(IS)",
+        "group" : "none"
+    }
+    
 ]
