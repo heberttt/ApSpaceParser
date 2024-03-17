@@ -316,7 +316,7 @@ List<dynamic> getOneDaySchedule(List<dynamic> schedule, Date today) {
 
 List<int> getDesperateAvailableShifts(Day d) {
   List<int> startShift = [
-    830,
+    815,
     1030,
     1130,
     1230,
