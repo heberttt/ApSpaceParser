@@ -94,11 +94,19 @@ void main() async {
               for(int i = 0; i < freeShiftForThisWeek.length; i++){
                 String freeShiftStr = freeShiftForThisWeek[i]['Schedule'][selectedDay];
                 List<String> freeShiftArr = freeShiftStr.split(",");
+                String taGroup = '';
+                  if (freeShiftForThisWeek[i]['group'] == null){
+                    taGroup = "All";
+                  }
+                  else{
+                    taGroup = freeShiftForThisWeek[i]['group'];
+                  }
                 if (freeShiftArr.contains("S$selectedShift")){
-                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
+                  
+                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
                 }
                 if (freeShiftStr == ''){
-                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
+                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})  (Group : $taGroup)");
                 }
               }
               
@@ -107,10 +115,17 @@ void main() async {
               for(int i = 0; i < freeShiftForThisWeek.length; i++){
                 String freeShiftStr = freeShiftForThisWeek[i]['Schedule'][selectedDay];
                 List<String> freeShiftArr = freeShiftStr.split(",");
+                String taGroup = '';
+                  if (freeShiftForThisWeek[i]['group'] == null){
+                    taGroup = "All";
+                  }
+                  else{
+                    taGroup = freeShiftForThisWeek[i]['group'];
+                  }
                 if (freeShiftArr.contains("S$selectedShift")){
-                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
+                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
                 }if (freeShiftStr == ''){
-                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
+                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
                 }
               }
             }else if (selectedWeek == thirdWeek){
@@ -118,10 +133,17 @@ void main() async {
               for(int i = 0; i < freeShiftForThisWeek.length; i++){
                 String freeShiftStr = freeShiftForThisWeek[i]['Schedule'][selectedDay];
                 List<String> freeShiftArr = freeShiftStr.split(",");
+                String taGroup = '';
+                  if (freeShiftForThisWeek[i]['group'] == null){
+                    taGroup = "All";
+                  }
+                  else{
+                    taGroup = freeShiftForThisWeek[i]['group'];
+                  }
                 if (freeShiftArr.contains("S$selectedShift")){
-                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
+                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
                 }if (freeShiftStr == ''){
-                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
+                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
                 }
               }
             }
@@ -198,11 +220,18 @@ void main() async {
               for(int i = 0; i < freeShiftForThisWeek.length; i++){
                 String freeShiftStr = freeShiftForThisWeek[i]['Schedule'][selectedDay];
                 List<String> freeShiftArr = freeShiftStr.split(",");
+                String taGroup = '';
+                  if (freeShiftForThisWeek[i]['group'] == null){
+                    taGroup = "All";
+                  }
+                  else{
+                    taGroup = freeShiftForThisWeek[i]['group'];
+                  }
                 if (freeShiftArr.contains("S$selectedShift")){
-                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
+                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
                 }
                 if (freeShiftStr == ''){
-                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
+                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
                 }
               }
               
@@ -211,10 +240,17 @@ void main() async {
               for(int i = 0; i < freeShiftForThisWeek.length; i++){
                 String freeShiftStr = freeShiftForThisWeek[i]['Schedule'][selectedDay];
                 List<String> freeShiftArr = freeShiftStr.split(",");
+                String taGroup = '';
+                  if (freeShiftForThisWeek[i]['group'] == null){
+                    taGroup = "All";
+                  }
+                  else{
+                    taGroup = freeShiftForThisWeek[i]['group'];
+                  }
                 if (freeShiftArr.contains("S$selectedShift")){
-                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
+                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
                 }if (freeShiftStr == ''){
-                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
+                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
                 }
               }
             }else if (selectedWeek == thirdWeek){
