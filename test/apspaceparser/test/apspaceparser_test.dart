@@ -68,7 +68,17 @@ void main() async {
           
 
           print("Enter the week (ex:4-3-2024): ");
-          String? selectedWeek = stdin.readLineSync();
+          String? selection = stdin.readLineSync();
+          
+          String? selectedWeek;
+          if (selection == "1"){
+            selectedWeek = thisWeek;
+          }else if (selection == "2"){
+            selectedWeek = nextWeek;
+          }else if (selection == "3"){
+            selectedWeek = thirdWeek;
+          }
+          
           print("Enter the day (ex:Monday): ");
           String? selectedDay = stdin.readLineSync();
           print("Enter the shift (Just enter from 1 to 10) : ");
