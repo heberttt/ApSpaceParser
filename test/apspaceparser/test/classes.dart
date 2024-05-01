@@ -62,26 +62,24 @@ class Week {
       friday =
           Day(start, getOneDaySchedule(getIntakeData(data, intake), start));
     }
-
-
-    
   }
 
-  Week.withGroup(Date start, List<dynamic> data, String intake, String? special, String group) {
-    monday =
-        Day(start, getOneDaySchedule(getIntakeWithGroupData(data, intake, group), start));
-        start.addDate(1);
-    tuesday =
-        Day(start, getOneDaySchedule(getIntakeWithGroupData(data, intake, group), start));
-        start.addDate(1);
-    wednesday =
-        Day(start, getOneDaySchedule(getIntakeWithGroupData(data, intake, group), start));
-        start.addDate(1);
-    thursday =
-        Day(start, getOneDaySchedule(getIntakeWithGroupData(data, intake, group), start));
-        start.addDate(1);
-    friday =
-        Day(start, getOneDaySchedule(getIntakeWithGroupData(data, intake, group), start));
+  Week.withGroup(Date start, List<dynamic> data, String intake, String? special,
+      String group) {
+    monday = Day(start,
+        getOneDaySchedule(getIntakeWithGroupData(data, intake, group), start));
+    start.addDate(1);
+    tuesday = Day(start,
+        getOneDaySchedule(getIntakeWithGroupData(data, intake, group), start));
+    start.addDate(1);
+    wednesday = Day(start,
+        getOneDaySchedule(getIntakeWithGroupData(data, intake, group), start));
+    start.addDate(1);
+    thursday = Day(start,
+        getOneDaySchedule(getIntakeWithGroupData(data, intake, group), start));
+    start.addDate(1);
+    friday = Day(start,
+        getOneDaySchedule(getIntakeWithGroupData(data, intake, group), start));
   }
 
   void printSchedule() {
@@ -135,6 +133,11 @@ class Date {
     year = y;
   }
 
+  @override
+  String toString() {
+    return "$date-$month-$year";
+  }
+
   void addDate(int days) {
     date += days;
     if (date > maxDate()) {
@@ -154,8 +157,9 @@ class Date {
   void minDate(int days) {
     date -= days;
     if (date < 1) {
-      date += maxDate();
+
       minMonth(1);
+      date += maxDate();
     }
   }
 
@@ -277,8 +281,6 @@ int getNumberOfWeeks(List<dynamic> data) {
   nextMon.addDate(7);
   var lastIndex = data[data.length - 1];
   String lastDate = lastIndex['DATESTAMP_ISO'];
-
-  
 
   if (!nextMon.compareDate(lastDate)) {
     nextMon.addDate(7);
@@ -517,7 +519,7 @@ class FreeShifts {
 
 String getPath() {
   String path = Directory.current.path;
-  List<String> pathArr = path.split("\\");
+  List<String> pathArr = path.split("/");
   String result = "";
   for (int i = 0; i < pathArr.length; i++) {
     result += pathArr[i];
@@ -567,7 +569,7 @@ List<dynamic> getAllWeekFreeShifts(
       Map<String, dynamic> scheduleMap = {
         'intake': intake,
         'name': taName,
-        'group' : taGroup,
+        'group': taGroup,
         'Schedule': freeShifts.getFreeWeeklyAvailableShifts()
       };
       allWeekFreeShifts.add(scheduleMap);
@@ -611,7 +613,7 @@ List<dynamic> getDesperateAllWeekFreeShifts(
       Map<String, dynamic> scheduleMap = {
         'intake': intake,
         'name': taName,
-        'group' : taGroup,
+        'group': taGroup,
         'Schedule': freeShifts.getFreeWeeklyAvailableShifts()
       };
       allWeekFreeShifts.add(scheduleMap);

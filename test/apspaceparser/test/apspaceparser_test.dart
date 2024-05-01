@@ -13,13 +13,156 @@ void main() async {
     List<dynamic> jsonData = json.decode(response.body);
     while (true) {
       print("Custom (Enter if not): ");
-      
 
       String intake = "APU2F2309IT(FT)";
 
       String? special = stdin.readLineSync();
 
       print("");
+
+      if (special == "hr_printDay") {
+        var technicalAssistantsIntakes = await getJson(getPath());
+
+        List<dynamic> taData = technicalAssistantsIntakes;
+        while (true) {
+          Date thisMon1 = getThisWeekDate();
+          int weekQuantity = getNumberOfWeeks(jsonData);
+          String nextWeek = "";
+          String thirdWeek = "";
+
+          String thisWeek =
+              "${thisMon1.date}-${thisMon1.month}-${thisMon1.year}";
+          if (weekQuantity > 1) {
+            thisMon1.addDate(7);
+            nextWeek = "${thisMon1.date}-${thisMon1.month}-${thisMon1.year}";
+          }
+          if (weekQuantity > 2) {
+            thisMon1.addDate(7);
+            thirdWeek = "${thisMon1.date}-${thisMon1.month}-${thisMon1.year}";
+          }
+
+          if (weekQuantity == 1) {
+            print("Available weeks: $thisWeek");
+          } else if (weekQuantity == 2) {
+            print("Available weeks: $thisWeek, $nextWeek");
+          } else if (weekQuantity > 2) {
+            print("Available weeks : $thisWeek, $nextWeek, $thirdWeek");
+          }
+
+          print("Enter the week (ex:4-3-2024): ");
+          String? selection = stdin.readLineSync();
+
+          String? selectedWeek;
+          if (selection == "1") {
+            selectedWeek = thisWeek;
+          } else if (selection == "2") {
+            selectedWeek = nextWeek;
+          } else if (selection == "3") {
+            selectedWeek = thirdWeek;
+          }
+
+          print("Enter the day (ex:Monday): ");
+          String? selectedDay = stdin.readLineSync();
+
+          if (selectedWeek == "" || selectedDay == "") {
+            print("Please enter again");
+            continue;
+          } else {
+            for (int selectedShift = 1; selectedShift <= 10; selectedShift++) {
+              List<dynamic> allFreeShifts = [];
+              for (int i = 0; i < weekQuantity; i++) {
+                List<dynamic> freeShiftsWeek =
+                    getAllWeekFreeShifts(taData, jsonData, i + 1);
+                allFreeShifts.add(freeShiftsWeek);
+              }
+
+              List<dynamic> freeShiftForThisWeek = [];
+              List<String> availableTas = [];
+              List<String> ambiguousTas = [];
+
+              if (selectedWeek == thisWeek) {
+                freeShiftForThisWeek = allFreeShifts[0];
+                for (int i = 0; i < freeShiftForThisWeek.length; i++) {
+                  String freeShiftStr =
+                      freeShiftForThisWeek[i]['Schedule'][selectedDay];
+                  List<String> freeShiftArr = freeShiftStr.split(",");
+                  String taGroup = '';
+                  if (freeShiftForThisWeek[i]['group'] == null) {
+                    taGroup = "All";
+                  } else {
+                    taGroup = freeShiftForThisWeek[i]['group'];
+                  }
+                  if (freeShiftArr.contains("S$selectedShift")) {
+                    availableTas.add(freeShiftForThisWeek[i]['name'] +
+                        " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                  }
+                  if (freeShiftStr == '') {
+                    ambiguousTas.add(freeShiftForThisWeek[i]['name'] +
+                        " (${freeShiftForThisWeek[i]['intake']})  (Group : $taGroup)");
+                  }
+                }
+              } else if (selectedWeek == nextWeek) {
+                freeShiftForThisWeek = allFreeShifts[1];
+                for (int i = 0; i < freeShiftForThisWeek.length; i++) {
+                  String freeShiftStr =
+                      freeShiftForThisWeek[i]['Schedule'][selectedDay];
+                  List<String> freeShiftArr = freeShiftStr.split(",");
+                  String taGroup = '';
+                  if (freeShiftForThisWeek[i]['group'] == null) {
+                    taGroup = "All";
+                  } else {
+                    taGroup = freeShiftForThisWeek[i]['group'];
+                  }
+                  if (freeShiftArr.contains("S$selectedShift")) {
+                    availableTas.add(freeShiftForThisWeek[i]['name'] +
+                        " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                  }
+                  if (freeShiftStr == '') {
+                    ambiguousTas.add(freeShiftForThisWeek[i]['name'] +
+                        " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                  }
+                }
+              } else if (selectedWeek == thirdWeek) {
+                freeShiftForThisWeek = allFreeShifts[2];
+                for (int i = 0; i < freeShiftForThisWeek.length; i++) {
+                  String freeShiftStr =
+                      freeShiftForThisWeek[i]['Schedule'][selectedDay];
+                  List<String> freeShiftArr = freeShiftStr.split(",");
+                  String taGroup = '';
+                  if (freeShiftForThisWeek[i]['group'] == null) {
+                    taGroup = "All";
+                  } else {
+                    taGroup = freeShiftForThisWeek[i]['group'];
+                  }
+                  if (freeShiftArr.contains("S$selectedShift")) {
+                    availableTas.add(freeShiftForThisWeek[i]['name'] +
+                        " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                  }
+                  if (freeShiftStr == '') {
+                    ambiguousTas.add(freeShiftForThisWeek[i]['name'] +
+                        " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                  }
+                }
+              }
+              print("");
+              getUnknownIntake(taData);
+              print("");
+              if (ambiguousTas.isNotEmpty && selectedShift == 1) {
+                print(
+                    "$ambiguousTas, these TA's schedule is not available yet for this week (Either on holiday or week not generated yet by ApSpace.)");
+                print("");
+              }
+
+              print(
+                  "These TA are available at S$selectedShift on $selectedDay for the Week of $selectedWeek: ");
+              for (var technicalAssistant in availableTas) {
+                print(technicalAssistant);
+              }
+            }
+            print("\n");
+          }
+        }
+      }
 
       if (special == "hebert") {
         print("Special (Hebert)");
@@ -46,39 +189,37 @@ void main() async {
           String nextWeek = "";
           String thirdWeek = "";
 
-          String thisWeek = "${thisMon1.date}-${thisMon1.month}-${thisMon1.year}";
-          if (weekQuantity > 1){
+          String thisWeek =
+              "${thisMon1.date}-${thisMon1.month}-${thisMon1.year}";
+          if (weekQuantity > 1) {
             thisMon1.addDate(7);
             nextWeek = "${thisMon1.date}-${thisMon1.month}-${thisMon1.year}";
           }
-          if (weekQuantity > 2){
+          if (weekQuantity > 2) {
             thisMon1.addDate(7);
             thirdWeek = "${thisMon1.date}-${thisMon1.month}-${thisMon1.year}";
           }
-          
-          
-          if (weekQuantity == 1){
+
+          if (weekQuantity == 1) {
             print("Available weeks: $thisWeek");
-          }else if (weekQuantity == 2){
+          } else if (weekQuantity == 2) {
             print("Available weeks: $thisWeek, $nextWeek");
-          }else if (weekQuantity > 2){
+          } else if (weekQuantity > 2) {
             print("Available weeks : $thisWeek, $nextWeek, $thirdWeek");
           }
 
-          
-
           print("Enter the week (ex:4-3-2024): ");
           String? selection = stdin.readLineSync();
-          
+
           String? selectedWeek;
-          if (selection == "1"){
+          if (selection == "1") {
             selectedWeek = thisWeek;
-          }else if (selection == "2"){
+          } else if (selection == "2") {
             selectedWeek = nextWeek;
-          }else if (selection == "3"){
+          } else if (selection == "3") {
             selectedWeek = thirdWeek;
           }
-          
+
           print("Enter the day (ex:Monday): ");
           String? selectedDay = stdin.readLineSync();
           print("Enter the shift (Just enter from 1 to 10) : ");
@@ -87,11 +228,11 @@ void main() async {
           if (selectedWeek == "" || selectedDay == "" || selectedShift == "") {
             print("Please enter again");
             continue;
-          }
-          else{
+          } else {
             List<dynamic> allFreeShifts = [];
-            for(int i = 0; i < weekQuantity; i++){
-              List<dynamic> freeShiftsWeek = getAllWeekFreeShifts(taData, jsonData, i + 1);
+            for (int i = 0; i < weekQuantity; i++) {
+              List<dynamic> freeShiftsWeek =
+                  getAllWeekFreeShifts(taData, jsonData, i + 1);
               allFreeShifts.add(freeShiftsWeek);
             }
 
@@ -99,80 +240,89 @@ void main() async {
             List<String> availableTas = [];
             List<String> ambiguousTas = [];
 
-            if (selectedWeek == thisWeek){
+            if (selectedWeek == thisWeek) {
               freeShiftForThisWeek = allFreeShifts[0];
-              for(int i = 0; i < freeShiftForThisWeek.length; i++){
-                String freeShiftStr = freeShiftForThisWeek[i]['Schedule'][selectedDay];
+              for (int i = 0; i < freeShiftForThisWeek.length; i++) {
+                String freeShiftStr =
+                    freeShiftForThisWeek[i]['Schedule'][selectedDay];
                 List<String> freeShiftArr = freeShiftStr.split(",");
                 String taGroup = '';
-                  if (freeShiftForThisWeek[i]['group'] == null){
-                    taGroup = "All";
-                  }
-                  else{
-                    taGroup = freeShiftForThisWeek[i]['group'];
-                  }
-                if (freeShiftArr.contains("S$selectedShift")){
-                  
-                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                if (freeShiftForThisWeek[i]['group'] == null) {
+                  taGroup = "All";
+                } else {
+                  taGroup = freeShiftForThisWeek[i]['group'];
                 }
-                if (freeShiftStr == ''){
-                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})  (Group : $taGroup)");
+                if (freeShiftArr.contains("S$selectedShift")) {
+                  availableTas.add(freeShiftForThisWeek[i]['name'] +
+                      " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                }
+                if (freeShiftStr == '') {
+                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] +
+                      " (${freeShiftForThisWeek[i]['intake']})  (Group : $taGroup)");
                 }
               }
-              
-            }else if (selectedWeek == nextWeek){
+            } else if (selectedWeek == nextWeek) {
               freeShiftForThisWeek = allFreeShifts[1];
-              for(int i = 0; i < freeShiftForThisWeek.length; i++){
-                String freeShiftStr = freeShiftForThisWeek[i]['Schedule'][selectedDay];
+              for (int i = 0; i < freeShiftForThisWeek.length; i++) {
+                String freeShiftStr =
+                    freeShiftForThisWeek[i]['Schedule'][selectedDay];
                 List<String> freeShiftArr = freeShiftStr.split(",");
                 String taGroup = '';
-                  if (freeShiftForThisWeek[i]['group'] == null){
-                    taGroup = "All";
-                  }
-                  else{
-                    taGroup = freeShiftForThisWeek[i]['group'];
-                  }
-                if (freeShiftArr.contains("S$selectedShift")){
-                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
-                }if (freeShiftStr == ''){
-                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                if (freeShiftForThisWeek[i]['group'] == null) {
+                  taGroup = "All";
+                } else {
+                  taGroup = freeShiftForThisWeek[i]['group'];
+                }
+                if (freeShiftArr.contains("S$selectedShift")) {
+                  availableTas.add(freeShiftForThisWeek[i]['name'] +
+                      " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                }
+                if (freeShiftStr == '') {
+                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] +
+                      " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
                 }
               }
-            }else if (selectedWeek == thirdWeek){
+            } else if (selectedWeek == thirdWeek) {
               freeShiftForThisWeek = allFreeShifts[2];
-              for(int i = 0; i < freeShiftForThisWeek.length; i++){
-                String freeShiftStr = freeShiftForThisWeek[i]['Schedule'][selectedDay];
+              for (int i = 0; i < freeShiftForThisWeek.length; i++) {
+                String freeShiftStr =
+                    freeShiftForThisWeek[i]['Schedule'][selectedDay];
                 List<String> freeShiftArr = freeShiftStr.split(",");
                 String taGroup = '';
-                  if (freeShiftForThisWeek[i]['group'] == null){
-                    taGroup = "All";
-                  }
-                  else{
-                    taGroup = freeShiftForThisWeek[i]['group'];
-                  }
-                if (freeShiftArr.contains("S$selectedShift")){
-                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
-                }if (freeShiftStr == ''){
-                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                if (freeShiftForThisWeek[i]['group'] == null) {
+                  taGroup = "All";
+                } else {
+                  taGroup = freeShiftForThisWeek[i]['group'];
+                }
+                if (freeShiftArr.contains("S$selectedShift")) {
+                  availableTas.add(freeShiftForThisWeek[i]['name'] +
+                      " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                }
+                if (freeShiftStr == '') {
+                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] +
+                      " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
                 }
               }
             }
             print("");
             getUnknownIntake(taData);
             print("");
-            if(ambiguousTas.isNotEmpty){
-              print("$ambiguousTas, these TA's schedule is not available yet for this week (Either on holiday or week not generated yet by ApSpace.)");
+            if (ambiguousTas.isNotEmpty) {
+              print(
+                  "$ambiguousTas, these TA's schedule is not available yet for this week (Either on holiday or week not generated yet by ApSpace.)");
               print("");
             }
-            
-            print("These TA are available at S$selectedShift on $selectedDay for the Week of $selectedWeek: ");
-            for (var technicalAssistant in availableTas){
+
+            print(
+                "These TA are available at S$selectedShift on $selectedDay for the Week of $selectedWeek: ");
+            for (var technicalAssistant in availableTas) {
               print(technicalAssistant);
             }
-            
-          break;
-        }}
-      }else if (special == "hr_desperate") {
+
+            break;
+          }
+        }
+      } else if (special == "hr_desperate") {
         var technicalAssistantsIntakes = await getJson(getPath());
 
         List<dynamic> taData = technicalAssistantsIntakes;
@@ -182,26 +332,24 @@ void main() async {
           String nextWeek = "";
           String thirdWeek = "";
 
-          String thisWeek = "${thisMon1.date}-${thisMon1.month}-${thisMon1.year}";
-          if (weekQuantity > 1){
+          String thisWeek =
+              "${thisMon1.date}-${thisMon1.month}-${thisMon1.year}";
+          if (weekQuantity > 1) {
             thisMon1.addDate(7);
             nextWeek = "${thisMon1.date}-${thisMon1.month}-${thisMon1.year}";
           }
-          if (weekQuantity > 2){
+          if (weekQuantity > 2) {
             thisMon1.addDate(7);
             thirdWeek = "${thisMon1.date}-${thisMon1.month}-${thisMon1.year}";
           }
-          
-          
-          if (weekQuantity == 1){
+
+          if (weekQuantity == 1) {
             print("Available weeks: $thisWeek");
-          }else if (weekQuantity == 2){
+          } else if (weekQuantity == 2) {
             print("Available weeks: $thisWeek, $nextWeek");
-          }else if (weekQuantity > 2){
+          } else if (weekQuantity > 2) {
             print("Available weeks : $thisWeek, $nextWeek, $thirdWeek");
           }
-
-          
 
           print("Enter the week (ex:4-3-2024): ");
           String? selectedWeek = stdin.readLineSync();
@@ -213,11 +361,11 @@ void main() async {
           if (selectedWeek == "" || selectedDay == "" || selectedShift == "") {
             print("Please enter again");
             continue;
-          }
-          else{
+          } else {
             List<dynamic> allFreeShifts = [];
-            for(int i = 0; i < weekQuantity; i++){
-              List<dynamic> freeShiftsWeek = getDesperateAllWeekFreeShifts(taData, jsonData, i + 1);
+            for (int i = 0; i < weekQuantity; i++) {
+              List<dynamic> freeShiftsWeek =
+                  getDesperateAllWeekFreeShifts(taData, jsonData, i + 1);
               allFreeShifts.add(freeShiftsWeek);
             }
 
@@ -225,71 +373,82 @@ void main() async {
             List<String> availableTas = [];
             List<String> ambiguousTas = [];
 
-            if (selectedWeek == thisWeek){
+            if (selectedWeek == thisWeek) {
               freeShiftForThisWeek = allFreeShifts[0];
-              for(int i = 0; i < freeShiftForThisWeek.length; i++){
-                String freeShiftStr = freeShiftForThisWeek[i]['Schedule'][selectedDay];
+              for (int i = 0; i < freeShiftForThisWeek.length; i++) {
+                String freeShiftStr =
+                    freeShiftForThisWeek[i]['Schedule'][selectedDay];
                 List<String> freeShiftArr = freeShiftStr.split(",");
                 String taGroup = '';
-                  if (freeShiftForThisWeek[i]['group'] == null){
-                    taGroup = "All";
-                  }
-                  else{
-                    taGroup = freeShiftForThisWeek[i]['group'];
-                  }
-                if (freeShiftArr.contains("S$selectedShift")){
-                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                if (freeShiftForThisWeek[i]['group'] == null) {
+                  taGroup = "All";
+                } else {
+                  taGroup = freeShiftForThisWeek[i]['group'];
                 }
-                if (freeShiftStr == ''){
-                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                if (freeShiftArr.contains("S$selectedShift")) {
+                  availableTas.add(freeShiftForThisWeek[i]['name'] +
+                      " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                }
+                if (freeShiftStr == '') {
+                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] +
+                      " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
                 }
               }
-              
-            }else if (selectedWeek == nextWeek){
+            } else if (selectedWeek == nextWeek) {
               freeShiftForThisWeek = allFreeShifts[1];
-              for(int i = 0; i < freeShiftForThisWeek.length; i++){
-                String freeShiftStr = freeShiftForThisWeek[i]['Schedule'][selectedDay];
+              for (int i = 0; i < freeShiftForThisWeek.length; i++) {
+                String freeShiftStr =
+                    freeShiftForThisWeek[i]['Schedule'][selectedDay];
                 List<String> freeShiftArr = freeShiftStr.split(",");
                 String taGroup = '';
-                  if (freeShiftForThisWeek[i]['group'] == null){
-                    taGroup = "All";
-                  }
-                  else{
-                    taGroup = freeShiftForThisWeek[i]['group'];
-                  }
-                if (freeShiftArr.contains("S$selectedShift")){
-                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
-                }if (freeShiftStr == ''){
-                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                if (freeShiftForThisWeek[i]['group'] == null) {
+                  taGroup = "All";
+                } else {
+                  taGroup = freeShiftForThisWeek[i]['group'];
+                }
+                if (freeShiftArr.contains("S$selectedShift")) {
+                  availableTas.add(freeShiftForThisWeek[i]['name'] +
+                      " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
+                }
+                if (freeShiftStr == '') {
+                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] +
+                      " (${freeShiftForThisWeek[i]['intake']}) (Group : $taGroup)");
                 }
               }
-            }else if (selectedWeek == thirdWeek){
+            } else if (selectedWeek == thirdWeek) {
               freeShiftForThisWeek = allFreeShifts[2];
-              for(int i = 0; i < freeShiftForThisWeek.length; i++){
-                String freeShiftStr = freeShiftForThisWeek[i]['Schedule'][selectedDay];
+              for (int i = 0; i < freeShiftForThisWeek.length; i++) {
+                String freeShiftStr =
+                    freeShiftForThisWeek[i]['Schedule'][selectedDay];
                 List<String> freeShiftArr = freeShiftStr.split(",");
-                if (freeShiftArr.contains("S$selectedShift")){
-                  availableTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
-                }if (freeShiftStr == ''){
-                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] + " (${freeShiftForThisWeek[i]['intake']})");
+                if (freeShiftArr.contains("S$selectedShift")) {
+                  availableTas.add(freeShiftForThisWeek[i]['name'] +
+                      " (${freeShiftForThisWeek[i]['intake']})");
+                }
+                if (freeShiftStr == '') {
+                  ambiguousTas.add(freeShiftForThisWeek[i]['name'] +
+                      " (${freeShiftForThisWeek[i]['intake']})");
                 }
               }
             }
             print("");
             getUnknownIntake(taData);
             print("");
-            if(ambiguousTas.isNotEmpty){
-              print("$ambiguousTas, these TA's schedule is not available yet for this week (Either on holiday or week not generated yet by ApSpace.)");
+            if (ambiguousTas.isNotEmpty) {
+              print(
+                  "$ambiguousTas, these TA's schedule is not available yet for this week (Either on holiday or week not generated yet by ApSpace.)");
               print("");
             }
-            
-            print("These TA are available at S$selectedShift on $selectedDay for the Week of $selectedWeek: ");
-            for (var technicalAssistant in availableTas){
+
+            print(
+                "These TA are available at S$selectedShift on $selectedDay for the Week of $selectedWeek: ");
+            for (var technicalAssistant in availableTas) {
               print(technicalAssistant);
             }
-            
-          break;
-        }}
+
+            break;
+          }
+        }
       } else {
         print("Enter intake: ");
 
